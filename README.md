@@ -7,4 +7,4 @@
 
 ## How it works
 
-Webcam -> camera-capture (capture frame) -> image-classifier-service (get prediction) -> results to stdin
+Webcam -> camera-capture (capture frame) -> image-classifier-service (get prediction) -> results to volume mounted text file
