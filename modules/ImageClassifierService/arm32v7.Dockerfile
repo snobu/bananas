@@ -12,9 +12,15 @@ RUN apt-get update &&  apt-get install -y \
 
 COPY /build/arm32v7-requirements.txt arm32v7-requirements.txt
 
-RUN pip3 install --upgrade pip 
-RUN pip install --upgrade setuptools 
-RUN pip install -r arm32v7-requirements.txt
+RUN pip3 install --upgrade pip
+#RUN wget https://www.piwheels.hostedpi.com/simple/numpy/numpy-1.14.4-cp35-cp35m-linux_armv7l.whl
+#RUN pip install ./numpy-1.14.4-cp35-cp35m-linux_armv7l.whl
+RUN pip install --upgrade setuptools
+RUN pip install numpy
+RUN pip install pillow
+RUN pip install flask
+#compiling numpy from source takes about an hour
+#RUN pip install -vvv -r arm32v7-requirements.txt
 
 #TensorFlow 1.5.0
 RUN pip install http://ci.tensorflow.org/view/Nightly/job/nightly-pi-python3/122/artifact/output-artifacts/tensorflow-1.5.0-cp34-none-any.whl

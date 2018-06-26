@@ -2,6 +2,8 @@
 import json
 import os
 import io
+import MessageParser
+from MessageParser import MessageParser
 
 # Imports for the REST API
 from flask import Flask, request
@@ -13,6 +15,10 @@ from PIL import Image
 
 # Imports for prediction
 from predict import initialize, predict_image, predict_url
+
+THRESHOLD = float(os.getenv('THRESHOLD', 0))
+MESSAGE_PARSER = MessageParser()
+file = open('/tmp/predictions/p.txt', 'w')
 
 app = Flask(__name__)
 
@@ -39,6 +45,13 @@ def predict_image_handler():
         #img = scipy.misc.imread(imageData)
         img = Image.open(imageData)
         results = predict_image(img)
+        prediction = MESSAGE_PARSER.highestProbabilityTagMeetingThreshold(results, THRESHOLD)
+        print('DEBUG:\n==============\n', prediction, '\n=============')
+        file.write('==================\n')
+        file.write('Got ' + prediction + '\n')
+        file.write('==================\n')
+        file.write(str(results) + '\n')
+        file.flush()
         return json.dumps(results)
     except Exception as e:
         print('EXCEPTION:', str(e))

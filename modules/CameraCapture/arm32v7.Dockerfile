@@ -21,6 +21,7 @@ RUN pip install -r arm32v7-requirements.txt
 RUN [ "cross-build-end" ]  
 
 ADD /app/ .
-ADD /build/ . 
+ADD /build/ .
+ADD /test/ .
 
 CMD [ "python", "-u", "./main.py" ]
