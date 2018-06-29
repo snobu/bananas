@@ -46,11 +46,16 @@ def predict_image_handler():
         img = Image.open(imageData)
         results = predict_image(img)
         prediction = MESSAGE_PARSER.highestProbabilityTagMeetingThreshold(results, THRESHOLD)
-        print('DEBUG:\n==============\n', prediction, '\n=============')
-        file.write('==================\n')
+        file.write('------------\n')
         file.write('Got ' + prediction + '\n')
-        file.write('==================\n')
-        file.write(str(results) + '\n')
+        file.write('------------\n')
+        try:
+            predictJson = json.loads(json.dumps(results))
+            for item in predictJson:
+                print(predictJson)
+                file.write(item['Tag'] + ': ' + str(item['Probability']) + '\n')
+        except Exception as e:
+            print('!!! EXCEPTION:', str(e))
         file.flush()
         return json.dumps(results)
     except Exception as e:
