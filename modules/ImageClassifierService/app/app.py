@@ -10,8 +10,6 @@ from flask import Flask, request
 
 # Imports for image procesing
 from PIL import Image
-#import scipy
-#from scipy import misc
 
 # Imports for prediction
 from predict import initialize, predict_image, predict_url
@@ -42,11 +40,10 @@ def predict_image_handler():
         else:
             imageData = io.BytesIO(request.get_data())
 
-        #img = scipy.misc.imread(imageData)
         img = Image.open(imageData)
         results = predict_image(img)
         prediction = MESSAGE_PARSER.highestProbabilityTagMeetingThreshold(results, THRESHOLD)
-        file.write('------------\n')
+        file.write('\n------------\n')
         file.write('Got ' + prediction + '\n')
         file.write('------------\n')
         try:
